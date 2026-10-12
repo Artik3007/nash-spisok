@@ -1,0 +1,13 @@
+node_modules
+dist
+dev-dist
+*.local
+.DS_Store
+.vscode
+.idea
+*.log
+
+# Настройки с ключами — не выкладываем в интернет
+.env
+.env.*
+!.env.example

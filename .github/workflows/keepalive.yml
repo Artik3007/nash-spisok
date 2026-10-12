@@ -1,0 +1,35 @@
+# Бесплатный Supabase «засыпает», если неделю никто не заходит.
+# Этот робот раз в 3 дня делает маленький запрос, и проект не засыпает.
+name: Не дать Supabase уснуть
+
+on:
+  schedule:
+    - cron: '17 6 */3 * *' # примерно раз в 3 дня, в 9:17 по Москве
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Запрос в Supabase
+        env:
+          URL: ${{ secrets.VITE_SUPABASE_URL }}
+          KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          code=$(curl -s -o response.txt -w '%{http_code}' -X POST "$URL/rest/v1/rpc/keepalive" \
+            -H "apikey: $KEY" -H "Content-Type: application/json" -d '{}')
+          echo "Ответ Supabase ($code): $(cat response.txt)"
+          if [ "$code" != "200" ]; then
+            echo "::error::Supabase не ответил. Возможно, проект уже на паузе — откройте supabase.com и нажмите Restore"
+            exit 1
+          fi
+
+      # GitHub сам выключает расписания в репозиториях, где 60 дней не было изменений.
+      # Эта команда каждый раз продлевает расписание, чтобы робот работал всегда.
+      - name: Продлить расписание
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keepalive.yml/enable"

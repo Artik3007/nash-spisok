@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #f7f5f2;
+  --color-ink: #1f2a37;
+  --color-muted: #8a94a3;
+  --color-line: #e7e4df;
+  --color-sky: #a9d0f5;
+  --color-sky-soft: #eaf3fc;
+  --color-sky-ink: #3b82c4;
+  --color-rose: #f5b5c6;
+  --color-rose-soft: #fcecf1;
+  --color-rose-ink: #d9587c;
+  --font-sans: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* Экран не ездит, не масштабируется и не «пружинит» */
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+/* 16px в полях ввода — иначе iPhone приближает экран при нажатии */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
