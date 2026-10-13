@@ -1,6 +1,7 @@
 import { Box, Plus } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { InviteCard } from '../components/InviteCard'
+import { Reminder } from '../components/Reminder'
 import { cx, ErrorText, Spinner } from '../components/ui'
 import { useAuth } from '../lib/auth'
 import { useData } from '../lib/data'
@@ -18,6 +19,7 @@ export function HomePage() {
       <h1 className="pt-2 text-[30px] font-bold tracking-tight">Наши списки</h1>
 
       {!partner && <InviteCard />}
+      {!loading && <Reminder />}
       <ErrorText>{error}</ErrorText>
 
       {loading ? (
