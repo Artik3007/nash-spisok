@@ -12,7 +12,7 @@ const tabs = [
 export function TabsLayout() {
   return (
     <div className="flex h-full flex-col">
-      <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-5 pt-[calc(env(safe-area-inset-top)+20px)] pb-6">
+      <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-none px-5 pt-[calc(env(safe-area-inset-top)+20px)] pb-6">
         <Outlet />
       </main>
       <nav className="grid shrink-0 grid-cols-3 border-t border-line bg-white/80 pb-[env(safe-area-inset-bottom)] backdrop-blur">

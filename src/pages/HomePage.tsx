@@ -18,7 +18,7 @@ export function HomePage() {
     <div className="space-y-5">
       <h1 className="pt-2 text-[30px] font-bold tracking-tight">Наши списки</h1>
 
-      {!partner && <InviteCard />}
+      {!partner && <InviteCard dismissible />}
       {!loading && <Reminder />}
       <ErrorText>{error}</ErrorText>
 

@@ -78,7 +78,7 @@ export function SubPage({ title, children, footer }: { title: string; children: 
         </button>
         <h1 className="max-w-[70%] truncate text-xl font-semibold">{title}</h1>
       </header>
-      <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-5 pb-[calc(env(safe-area-inset-bottom)+24px)]">
+      <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-none px-5 pb-[calc(env(safe-area-inset-bottom)+24px)]">
         {children}
       </main>
       {footer}

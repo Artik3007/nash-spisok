@@ -40,7 +40,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="h-full overflow-y-auto overscroll-contain">
+    <div className="h-full overflow-y-auto overscroll-none">
       <form
         onSubmit={submit}
         className="mx-auto flex min-h-full max-w-md flex-col px-6 pt-[calc(env(safe-area-inset-top)+12vh)] pb-[calc(env(safe-area-inset-bottom)+24px)]"

@@ -55,7 +55,7 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="h-full overflow-y-auto overscroll-contain">
+    <div className="h-full overflow-y-auto overscroll-none">
       <form
         onSubmit={submit}
         className="mx-auto max-w-md space-y-5 px-6 pt-[calc(env(safe-area-inset-top)+40px)] pb-[calc(env(safe-area-inset-bottom)+32px)]"
