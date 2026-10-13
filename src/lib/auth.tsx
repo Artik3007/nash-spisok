@@ -12,6 +12,8 @@ type AuthState = {
   loading: boolean
   /** профиль для текущего входа уже проверен (есть он или нет) */
   profileChecked: boolean
+  /** не удалось связаться с сервером */
+  offline: boolean
   refresh: () => Promise<void>
 }
 
@@ -24,6 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [partner, setPartner] = useState<Profile | null>(null)
   const [couple, setCouple] = useState<Couple | null>(null)
   const [checkedFor, setCheckedFor] = useState<string | null>(null)
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -47,9 +50,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data: people, error } = await supabase.from('profiles').select('id, couple_id, name, color')
     if (error) {
       // нет сети — оставляем то, что уже было
+      setOffline(true)
       setCheckedFor(userId)
       return
     }
+    setOffline(false)
     const me = (people as Profile[]).find((p) => p.id === userId) ?? null
     setProfile(me)
     setPartner((people as Profile[]).find((p) => p.id !== userId) ?? null)
@@ -83,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loading = !booted && !firstCheckDone
 
   return (
-    <AuthContext.Provider value={{ session, profile, partner, couple, loading, profileChecked, refresh }}>
+    <AuthContext.Provider value={{ session, profile, partner, couple, loading, profileChecked, offline, refresh }}>
       {children}
     </AuthContext.Provider>
   )

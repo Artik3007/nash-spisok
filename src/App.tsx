@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { TabsLayout } from './components/TabsLayout'
-import { FullScreenLoader } from './components/ui'
+import { Button, FullScreenLoader } from './components/ui'
 import { AuthProvider, useAuth } from './lib/auth'
 import { DataProvider } from './lib/data'
 import { CategoriesPage } from './pages/CategoriesPage'
@@ -14,9 +15,10 @@ import { RandomPage } from './pages/RandomPage'
 import { RegisterPage } from './pages/RegisterPage'
 
 function AppRoutes() {
-  const { session, profile, loading } = useAuth()
+  const { session, profile, loading, offline } = useAuth()
 
   if (loading) return <FullScreenLoader />
+  if (session && !profile && offline) return <OfflineScreen />
 
   // Не вошли или пара ещё не настроена
   if (!session || !profile) {
@@ -45,6 +47,21 @@ function AppRoutes() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </DataProvider>
+  )
+}
+
+function OfflineScreen() {
+  const { refresh } = useAuth()
+  const [busy, setBusy] = useState(false)
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-3 px-8 text-center">
+      <p className="text-4xl">📡</p>
+      <p className="text-lg font-semibold">Нет связи с сервером</p>
+      <p className="text-muted">Проверьте интернет. Если интернет есть, возможно, Supabase «заснул» — подробности в README.</p>
+      <Button className="mt-4 max-w-60" busy={busy} onClick={() => (setBusy(true), refresh().finally(() => setBusy(false)))}>
+        Повторить
+      </Button>
+    </div>
   )
 }
 
