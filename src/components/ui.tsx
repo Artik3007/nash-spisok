@@ -67,7 +67,7 @@ export function ErrorText({ children }: { children: ReactNode }) {
 export function SubPage({ title, children, footer }: { title: string; children: ReactNode; footer?: ReactNode }) {
   const navigate = useNavigate()
   return (
-    <div className="flex h-full flex-col">
+    <div className="relative flex h-full flex-col">
       <header className="relative flex shrink-0 items-center justify-center px-5 pt-[calc(env(safe-area-inset-top)+12px)] pb-3">
         <button
           onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}

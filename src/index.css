@@ -36,3 +36,14 @@ textarea,
 select {
   font-size: 16px;
 }
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes rise {
+  from {
+    transform: translateY(100%);
+  }
+}
